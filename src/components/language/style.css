@@ -1,0 +1,16 @@
+.Language{
+    display: flex;
+    /* position: fixed;
+    top: 10px;
+    right: 100px; */
+}
+.Language-button{
+    background-color: #fff;
+    padding: 12px;
+    cursor: pointer;
+}
+
+.Language-active{
+    background-color: rgb(145, 142, 142);
+    font-weight: 700;
+}

@@ -13,6 +13,7 @@ function Basket() {
     list: state.basket.list,
     amount: state.basket.amount,
     sum: state.basket.sum,
+    listEn: state.basket.listEn,
   }));
 
   const callbacks = {
@@ -31,9 +32,15 @@ function Basket() {
     ),
   };
 
+  let language = localStorage.getItem('language');
+
+  let title = language == 'ru' ? 'Корзина' : 'Basket';
+
+  let list = language == 'ru' ? select.list : select.listEn;
+
   return (
-    <ModalLayout title="Корзина" onClose={callbacks.closeModal}>
-      <List list={select.list} renderItem={renders.itemBasket} />
+    <ModalLayout title={title} onClose={callbacks.closeModal}>
+      <List list={list} renderItem={renders.itemBasket} />
       <BasketTotal sum={select.sum} />
     </ModalLayout>
   );

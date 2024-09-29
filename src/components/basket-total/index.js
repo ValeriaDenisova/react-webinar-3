@@ -6,9 +6,10 @@ import './style.css';
 
 function BasketTotal({ sum }) {
   const cn = bem('BasketTotal');
+  let language = localStorage.getItem('language');
   return (
     <div className={cn()}>
-      <span className={cn('cell')}>Итого</span>
+      <span className={cn('cell')}>{language == 'ru' ? 'Итого' : 'Total'}</span>
       <span className={cn('cell')}> {numberFormat(sum)} ₽</span>
       <span className={cn('cell')}></span>
     </div>

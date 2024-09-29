@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { cn as bem } from '@bem-react/classname';
 import { numberFormat } from '../../utils';
 import './style.css';
+import language from '../language';
 
 function Item(props) {
   const cn = bem('Item');
@@ -11,13 +12,14 @@ function Item(props) {
     onAdd: e => props.onAdd(props.item._id),
   };
 
+  let language = localStorage.getItem('language');
   return (
     <div className={cn()}>
       {/*<div className={cn('code')}>{props.item._id}</div>*/}
-      <div className={cn('title')}>{props.item.title}</div>
+      <a href={'/' + props.item._id} className={cn('title')}>{props.item.title}</a>
       <div className={cn('actions')}>
         <div className={cn('price')}>{numberFormat(props.item.price)} ₽</div>
-        <button onClick={callbacks.onAdd}>Добавить</button>
+        <button onClick={callbacks.onAdd}>{language === 'ru' ? 'Добавить' : 'Add'}</button>
       </div>
     </div>
   );

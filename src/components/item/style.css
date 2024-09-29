@@ -32,3 +32,11 @@
   white-space: nowrap;
   font-size: 18px;
 }
+a{
+  text-decoration: none;
+  color: black;
+}
+a:hover{
+  text-decoration: underline;
+  cursor: pointer;
+}

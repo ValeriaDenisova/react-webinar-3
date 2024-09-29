@@ -12,15 +12,16 @@ function ItemBasket(props) {
     onRemove: e => props.onRemove(props.item._id),
   };
 
+  let language = localStorage.getItem('language');
+
   return (
     <div className={cn()}>
-      {/*<div className={cn('code')}>{props.item._id}</div>*/}
-      <div className={cn('title')}>{props.item.title}</div>
+      <a href={'/' + props.item._id} className={cn('title')}>{props.item.title}</a>
       <div className={cn('right')}>
         <div className={cn('cell')}>{numberFormat(props.item.price)} ₽</div>
-        <div className={cn('cell')}>{numberFormat(props.item.amount || 0)} шт</div>
+        <div className={cn('cell')}>{numberFormat(props.item.amount || 0)} {language === 'ru' ? 'шт' : 'pc'}</div>
         <div className={cn('cell')}>
-          <button onClick={callbacks.onRemove}>Удалить</button>
+          <button onClick={callbacks.onRemove}>{language === 'ru' ? 'Удалить' : 'Remove'}</button>
         </div>
       </div>
     </div>

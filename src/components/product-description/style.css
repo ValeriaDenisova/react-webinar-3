@@ -1,0 +1,19 @@
+.ProductDescription{
+    padding: 20px 40px;
+    position: relative;
+}
+
+p{
+    font-size: 18px;
+    font-weight: 400;
+    margin-bottom: 20px;
+}
+
+span{
+    font-weight: 700;
+}
+p.ProductDescription-price{
+    font-size: 24px;
+}
+
+

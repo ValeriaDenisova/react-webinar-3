@@ -1,11 +1,14 @@
+import { json } from 'react-router-dom';
 import StoreModule from '../module';
+
 
 class Basket extends StoreModule {
   initState() {
     return {
-      list: [],
-      sum: 0,
-      amount: 0,
+      list: JSON.parse(localStorage.getItem('basket')),
+      sum:  Number(localStorage.getItem('sum')),
+      amount: Number(localStorage.getItem('amout')),
+      listEn: JSON.parse(localStorage.getItem('basketEn')),
     };
   }
 
@@ -27,11 +30,23 @@ class Basket extends StoreModule {
       return result;
     });
 
+    const listEn = this.getState().listEn.map(item => {
+      let result = item;
+      if (item._id === _id) {
+        exist = true; // Запомним, что был найден в корзине
+        result = { ...item, amount: item.amount + 1 };
+      }
+      // sum += result.price * result.amount;
+      return result;
+    });
+
     if (!exist) {
       // Поиск товара в каталоге, чтобы его добавить в корзину.
       // @todo В реальном приложении будет запрос к АПИ вместо поиска по состоянию.
       const item = this.store.getState().catalog.list.find(item => item._id === _id);
-      list.push({ ...item, amount: 1 }); // list уже новый, в него можно пушить.
+      const itemEn = this.store.getState().catalog.listEn.find(item => item._id === _id);
+      list.push({ ...item, amount: 1 });
+      listEn.push({ ...itemEn, amount: 1 }); // list уже новый, в него можно пушить.
       // Добавляем к сумме.
       sum += item.price;
     }
@@ -42,9 +57,15 @@ class Basket extends StoreModule {
         list,
         sum,
         amount: list.length,
+        listEn,
       },
       'Добавление в корзину',
     );
+  
+    localStorage.setItem('basket', JSON.stringify(list))
+    localStorage.setItem('basketEn', JSON.stringify(listEn))
+    localStorage.setItem('amout', list.length)
+    localStorage.setItem('sum', sum)
   }
 
   /**
@@ -58,6 +79,11 @@ class Basket extends StoreModule {
       sum += item.price * item.amount;
       return true;
     });
+    const listEn = this.getState().listEn.filter(item => {
+      if (item._id === _id) return false;
+      // sum += item.price * item.amount;
+      return true;
+    });
 
     this.setState(
       {
@@ -65,9 +91,15 @@ class Basket extends StoreModule {
         list,
         sum,
         amount: list.length,
+        listEn,
       },
       'Удаление из корзины',
     );
+
+    localStorage.setItem('basket', JSON.stringify(list))
+    localStorage.setItem('basketEn', JSON.stringify(list))
+    localStorage.setItem('amout', list.length)
+    localStorage.setItem('sum', sum)
   }
 }
 
