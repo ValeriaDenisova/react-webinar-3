@@ -36,6 +36,7 @@ function Article() {
     addToBasket: useCallback(_id => store.actions.basket.addToBasket(_id), [store]),
   };
 
+
   return (
     <PageLayout>
       <Head title={select.article.title}>

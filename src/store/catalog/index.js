@@ -16,6 +16,7 @@ class CatalogState extends StoreModule {
         limit: 10,
         sort: 'order',
         query: '',
+        category: '66fab39363bfe248a856308c || 66fab39363bfe248a856308d || 66fab39363bfe248a856308e || 66fab39363bfe248a856308f || 66fab39363bfe248a8563090 || 66fab39363bfe248a8563091 || 66fab39363bfe248a8563092 || 66fab39363bfe248a8563093 || 66fab39363bfe248a8563094 || 66fab39363bfe248a8563095',
       },
       count: 0,
       waiting: false,
@@ -28,6 +29,16 @@ class CatalogState extends StoreModule {
    * @param [newParams] {Object} Новые параметры
    * @return {Promise<void>}
    */
+
+  // category(str) {
+  //   this.setState(
+  //     {
+  //       ...this.getState(),
+  //       category: str,
+  //     },
+  //   );
+  // }
+
   async initParams(newParams = {}) {
     const urlParams = new URLSearchParams(window.location.search);
     let validParams = {};
@@ -36,6 +47,7 @@ class CatalogState extends StoreModule {
       validParams.limit = Math.min(Number(urlParams.get('limit')) || 10, 50);
     if (urlParams.has('sort')) validParams.sort = urlParams.get('sort');
     if (urlParams.has('query')) validParams.query = urlParams.get('query');
+    if (urlParams.has('category')) validParams.category = urlParams.get('category');
     await this.setParams({ ...this.initState().params, ...validParams, ...newParams }, true);
   }
 
@@ -85,10 +97,14 @@ class CatalogState extends StoreModule {
       fields: 'items(*),count',
       sort: params.sort,
       'search[query]': params.query,
+      'search[category]': params.category
     };
 
+
     const response = await fetch(`/api/v1/articles?${new URLSearchParams(apiParams)}`);
+    // const response = await fetch(`/api/v1/articles?fields=items(*),count&limit=20&search[edition]=2012`);
     const json = await response.json();
+
     this.setState(
       {
         ...this.getState(),

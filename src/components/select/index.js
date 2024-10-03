@@ -4,16 +4,25 @@ import './style.css';
 
 function Select(props) {
   const onSelect = e => {
-    props.onChange(e.target.value);
+   
+    for(let i = 0; i < props.options.length; i++){
+      if(e.target.value == props.options[i].value){
+        props.onChange(e.target.value, i);
+      }
+    }
+    
   };
+
 
   return (
     <select className="Select" value={props.value} onChange={onSelect}>
-      {props.options.map(item => (
-        <option key={item.value} value={item.value}>
+      {props.selected !== undefined && <option key={props.selected.value} value={props.selected.value}> {props.selected.title}</option>}
+      {props.options.map((item, index) => (
+        props.selected !== undefined && item.title !== props.selected.title && <option key={item.value} value={item.value} id={`${index}`}>
           {item.title}
         </option>
-      ))}
+
+))}
     </select>
   );
 }

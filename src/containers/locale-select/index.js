@@ -3,6 +3,7 @@ import useStore from '../../hooks/use-store';
 import useSelector from '../../hooks/use-selector';
 import useTranslate from '../../hooks/use-translate';
 import Select from '../../components/select';
+import SelectSort from '../../components/select-sort';
 
 /**
  * Контейнер для смены языка
@@ -20,7 +21,7 @@ function LocaleSelect() {
     ),
   };
 
-  return <Select onChange={setLang} value={lang} options={options.lang} />;
+  return <SelectSort onChange={setLang} value={lang} options={options.lang} />;
 }
 
 export default memo(LocaleSelect);
